@@ -1,3 +1,5 @@
+/* TYPESCRIPT BASIC */
+
 let variable = 'hello world';
 /*
 variable = 23; // Type 'number' is not assignable to type 'string'.
@@ -19,14 +21,12 @@ let testBoolean: boolean;
 // testBoolean = 'true' // Type 'string' is not assignable to type 'boolean'.
 testBoolean = true;
 
-/* MULTIPLE TYPES */
-
 let testStringOrNumber: string | number;
 // testStringOrNumber = false; // Type 'boolean' is not assignable to type 'string | number'.
 testStringOrNumber = 'clarila';
 testStringOrNumber = 22;
 
-// ARRAY
+/* ARRAY */
 
 let names = ['dimas', 'clarila'];
 // names.push(3) // Argument of type 'number' is not assignable to parameter of type 'string'.
@@ -48,7 +48,7 @@ let testStringOrNumberArray: (string | number)[];
 // testStringOrNumberArray = [1, true, 'three'] // Type 'boolean' is not assignable to type 'string | number'.
 testStringOrNumberArray = ['one', 2, 3];
 
-// OBJECTS
+/* OBJECTS */
 
 let user = {
   username: 'dimmasyusuf',
@@ -96,7 +96,7 @@ userObj2 = {
   phone: '+12345',
 };
 
-// ANY
+/* ANY */
 
 // let testAny; // by default, the type is any.
 let testAny: any;
@@ -112,3 +112,142 @@ testAny = {};
 let testAnyArray: any[];
 
 testAnyArray = [1, true, 'three', undefined, null];
+
+/* FUNCTIONS */
+
+const returnString = (): string => {
+  return 'hello typescript';
+};
+
+const multiple = (num: number) => {
+  return num * 2;
+};
+
+const multiple2 = (num: number): number => {
+  return num * 2;
+}; // exactly same as multiple1
+
+const multiple3 = (num: number): void => {
+  // return num * 2;
+  // do something but don't return
+};
+
+const sum = (a: number, b: number, another?: number) => {
+  return a + b;
+};
+
+sum(4, 5);
+
+const userFunc = (user: { username: string; age: number; phone?: string }) => {
+  console.log(user.username);
+};
+
+/* TYPE ALIASES */
+
+type UserType = {
+  username: string;
+  age: number;
+  isAdmin: boolean;
+  phone?: string;
+};
+
+const betterUser = (user: UserType) => {
+  console.log(user.username);
+};
+
+type testFunc = (a: number, b: string) => void;
+
+const write: testFunc = (num, str) => {
+  console.log(num + 'times' + str);
+};
+
+type UserType2 = {
+  username: string;
+  age: number;
+  phone?: string;
+  theme: 'dark' | 'light';
+};
+
+const userWithTheme: UserType2 = {
+  username: 'dimas',
+  age: 23,
+  theme: 'light',
+};
+
+/* INTERFACES */
+
+interface IUser {
+  username: string;
+  email: string;
+  age: number;
+}
+
+interface IEmployee extends IUser {
+  employeeId: number;
+}
+
+const employee: IEmployee = {
+  username: 'dimmasyusuf',
+  email: 'dimasyusufqurohman@gmail.com',
+  age: 23,
+  employeeId: 1,
+};
+
+const client: IUser = {
+  username: 'clarilawm',
+  email: 'cmaylenna28@gmail.com',
+  age: 22,
+};
+
+/* GENERICS */
+interface IAuthor {
+  id: number;
+  username: string;
+}
+
+interface ICategory {
+  id: number;
+  title: string;
+}
+
+interface IPost {
+  id: number;
+  title: string;
+  desc: string;
+  extra: IAuthor[] | ICategory[];
+}
+
+interface IPostBetter<T> {
+  id: number;
+  title: string;
+  desc: string;
+  extra: T[];
+}
+
+const testMe: IPostBetter<string> = {
+  id: 1,
+  title: 'post title',
+  desc: 'post desc',
+  extra: ['str', 'str2'],
+};
+
+interface IPostEvenBetter<T extends object> {
+  id: number;
+  title: string;
+  desc: string;
+  extra: T[];
+}
+
+const testMe2: IPostEvenBetter<IAuthor> = {
+  id: 1,
+  title: 'post title',
+  desc: 'post desc',
+  extra: [{ id: 23, username: 'dimmasyusuf' }],
+};
+
+const testMe3: IPostEvenBetter<ICategory> = {
+  id: 1,
+  title: 'post title',
+  desc: 'post desc',
+  extra: [{ id: 23, title: 'foods' }],
+};
